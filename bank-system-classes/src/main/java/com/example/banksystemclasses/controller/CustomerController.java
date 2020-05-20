@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 @RestController
 public class CustomerController {
     @Autowired
@@ -34,13 +36,13 @@ public class CustomerController {
 
     //Create a new Customer
     @PostMapping("/Customers")
-    public CustomerInfo createCustomer(@RequestBody CustomerInfo customer) {
+    public CustomerInfo createCustomer(@Valid @RequestBody CustomerInfo customer) {
         return customerService.createNewCustomer(customer);
 
     }
 
     @PutMapping("/Customers")
-    public CustomerInfo updateCustomer(@RequestBody CustomerInfo customer){
+    public CustomerInfo updateCustomer(@Valid @RequestBody CustomerInfo customer){
         if(customer.getId() == loginId)
             return customerService.updateCustomer(customer);
         else
@@ -48,7 +50,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/Customers/updateMobile/{id}")
-    public CustomerContact updateCustomerMobile(@RequestBody CustomerContact customerContact, @PathVariable("id") Long id){
+    public CustomerContact updateCustomerMobile(@Valid @RequestBody CustomerContact customerContact, @PathVariable("id") Long id){
         if(loginId == id)
             return customerService.updateCustomerMobile(customerContact, id);
         else
@@ -56,7 +58,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/Customers/updateEmail/{id}")
-    public CustomerContact updateCustomerEmail(@RequestBody CustomerContact customerContact, @PathVariable("id") Long id){
+    public CustomerContact updateCustomerEmail(@Valid @RequestBody CustomerContact customerContact, @PathVariable("id") Long id){
         if(loginId == id)
             return customerService.updateCustomerEmail(customerContact, id);
         else
@@ -64,7 +66,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/Customers/updateAddress/{id}")
-    public CustomerContact updateCustomerAddress(@RequestBody CustomerContact customerContact, @PathVariable("id") Long id){
+    public CustomerContact updateCustomerAddress(@Valid @RequestBody CustomerContact customerContact, @PathVariable("id") Long id){
         if(loginId == id)
             return customerService.updateCustomerAddress(customerContact, id);
         else
@@ -81,7 +83,7 @@ public class CustomerController {
     }
 
     @PostMapping("/Customers/login")
-    private CustomerInfo loginCustomer(@RequestBody LoginClass loginClass){
+    private CustomerInfo loginCustomer(@Valid @RequestBody LoginClass loginClass){
         Long id = loginClass.getId();
         return customerService.getCustomerById(id)
         		.map(customerInfo->{

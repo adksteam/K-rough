@@ -5,7 +5,9 @@ import com.example.banksystemclasses.cryptoconverter.Encryptor;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Customers_info")
@@ -23,7 +25,7 @@ public class CustomerInfo
 
     @NotNull(message="password must not be empty")
     @Column(name="Password")
-    @Size(min=6)
+    @Size(min=6,max=15,message="Password ranges from 6 charactrrs to 15 characters.")
     @Convert(converter = Encryptor.class)
     private String password;
 
